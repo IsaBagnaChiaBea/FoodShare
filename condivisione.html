@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Condividi Ricetta – FoodShare</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <style>
+         body {
+         font-family: 'Montserrat', sans-serif;
+         background-color: #FFF3E0;
+         padding-top: 30px;
+         }
+         .container-box {
+         background: white;
+         padding: 40px;
+         max-width: 900px;
+         margin: auto;
+         border-radius: 20px;
+         box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+         }
+         h1 {
+         font-family: 'Lobster', cursive;
+         font-size: 3rem;
+         color: #FF7043;
+         }
+         .preview-img {
+         max-width: 100%;
+         border-radius: 15px;
+         margin-top: 15px;
+         display: none;
+         }
+         button {
+         background-color: #FF7043 !important;
+         border: none;
+         }
+         .btn:hover {
+         background-color: #e86436 !important;
+         }
+         #success {
+         font-size: 1.2rem;
+         border-radius: 10px;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container-box">
+         <h1 class="text-center mb-4"><i class="fas fa-upload"></i> Condividi una Ricetta</h1>
+         <p class="text-center text-muted">Carica la tua ricetta e partecipa alla Community FoodShare!</p>
+         <form id="share-form">
+            <div class="form-group">
+               <label><strong>Titolo della Ricetta</strong></label>
+               <input type="text" id="recipe-title" class="form-control" placeholder="Es. Pasta al pesto" required>
+            </div>
+            <div class="form-group">
+               <label><strong>Descrizione</strong></label>
+               <textarea id="recipe-desc" class="form-control" rows="4" placeholder="Descrivi la tua ricetta..." required></textarea>
+            </div>
+            <div class="form-group">
+               <label><strong>Carica un’immagine</strong></label>
+               <input type="file" id="recipe-img" class="form-control-file" accept="image/*" required>
+               <img id="preview" class="preview-img">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+            <i class="fas fa-paper-plane"></i> Pubblica Ricetta
+            </button>
+         </form>
+         <div id="success" class="alert alert-success text-center mt-4" style="display:none;">
+            Ricetta inviata con successo!<br>
+            <a href="foodsharee.html"><strong>Vai alla Home</strong></a>
+         </div>
+      </div>
+      <script>
+         const imgInput = document.getElementById("recipe-img");
+         const previewImg = document.getElementById("preview");
+         
+        
+         imgInput.addEventListener("change", () => {
+             const file = imgInput.files[0];
+             previewImg.src = URL.createObjectURL(file);
+             previewImg.style.display = "block";
+         });
+         
+        
+         document.getElementById("share-form").addEventListener("submit", function(e) {
+             e.preventDefault();
+         
+             const title = document.getElementById("recipe-title").value;
+             const desc = document.getElementById("recipe-desc").value;
+             const file = imgInput.files[0];
+         
+             const reader = new FileReader();
+             reader.readAsDataURL(file);
+         
+             reader.onload = function() {
+                 const newRecipe = {
+                     title: title,
+                     description: desc,
+                     image: reader.result
+                 };
+         
+               
+                 let saved = JSON.parse(localStorage.getItem("userRecipes") || "[]");
+                 saved.push(newRecipe);
+                 localStorage.setItem("userRecipes", JSON.stringify(saved));
+         
+                 
+                 document.getElementById("success").style.display = "block";
+                 document.getElementById("share-form").reset();
+                 previewImg.style.display = "none";
+             };
+         });
+      </script>
+   </body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="it">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>FoodShare</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <style>
+         :root {
+         --primary-bg: #FFF3E0;
+         --navbar-bg: #FFAB91;
+         --accent-color: #FF7043;
+         --text-color: #343a40;
+         --light-grey: #f0f0f0;
+         --dark-grey: #6c757d;
+         }
+         body {
+         padding-top: 20px;
+         font-family: 'Montserrat', sans-serif;
+         background-color: var(--primary-bg);
+         color: var(--text-color);
+         line-height: 1.6;
+         }
+         .top-logo-section {
+         text-align: center;
+         margin-bottom: 30px;
+         padding-bottom: 15px;
+         border-bottom: 1px solid rgba(0,0,0,0.1);
+         }
+         .top-logo-section .brand-logo {
+         font-family: 'Lobster', cursive;
+         font-size: 5rem;
+         color: var(--accent-color);
+         font-weight: 400;
+         line-height: 1;
+         display: block;
+         margin-bottom: 5px;
+         }
+         .top-logo-section .brand-slogan {
+         font-size: 1.2rem;
+         color: var(--dark-grey);
+         font-weight: 300;
+         }
+         .navbar {
+         background-color: var(--navbar-bg);
+         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+         position: sticky;
+         top: 0;
+         z-index: 1000;
+         margin-bottom: 30px;
+         border-radius: 0 0 15px 15px;
+         }
+         .navbar-nav .nav-link {
+         color: white !important;
+         font-weight: 600;
+         transition: color 0.2s, background-color 0.2s;
+         padding: 10px 15px;
+         border-radius: 8px;
+         }
+         .navbar-nav .nav-link:hover {
+         background-color: rgba(255, 255, 255, 0.2);
+         }
+         .main-search-area, .sidebar-filters, .cta-section {
+         background-color: white;
+         border-radius: 20px;
+         box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+         padding: 40px;
+         margin-bottom: 50px;
+         }
+         #ingredient-search-input:focus {
+         border-color: var(--accent-color);
+         box-shadow: 0 0 0 0.2rem rgba(255, 112, 67, .25);
+         }
+         .input-group-text {
+         background-color: var(--accent-color);
+         color: white;
+         border-radius: 0 50px 50px 0 !important;
+         border: none;
+         padding: 15px 20px;
+         font-size: 1.2rem;
+         }
+         .sidebar-filters h4 {
+         color: var(--navbar-bg);
+         font-weight: 700;
+         margin-bottom: 25px;
+         }
+         .filter-item.active {
+         background-color: var(--navbar-bg);
+         color: white;
+         border-color: var(--navbar-bg);
+         box-shadow: 0 4px 10px rgba(255, 171, 145, 0.3);
+         }
+         .recipe-item-wrapper {
+         perspective: 1000px;
+         height: 400px;
+         margin-bottom: 40px;
+         }
+         .recipe-card {
+         width: 100%;
+         height: 100%;
+         position: relative;
+         transform-style: preserve-3d;
+         transition: transform 0.6s;
+         cursor: pointer;
+         box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+         border-radius: 15px;
+         }
+         .recipe-card.flipped {
+         transform: rotateY(180deg);
+         }
+         .recipe-front, .recipe-back {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         backface-visibility: hidden;
+         border-radius: 15px;
+         }
+         .recipe-front img {
+         height: 220px;
+         object-fit: cover;
+         border-top-left-radius: 15px;
+         border-top-right-radius: 15px;
+         }
+         .recipe-back {
+         background-color: #FFCCBC;
+         border: 1px solid var(--navbar-bg);
+         transform: rotateY(180deg);
+         padding: 30px;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         text-align: center;
+         }
+         .recipe-back .ingredients-text {
+         font-size: 1.1rem;
+         padding: 15px;
+         font-weight: 500;
+         }
+         footer {
+         background-color: var(--text-color);
+         color: white;
+         padding: 30px 0;
+         border-top-left-radius: 20px;
+         border-top-right-radius: 20px;
+         margin-top: 40px;
+         text-align: center;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="top-logo-section">
+         <img src="logo1.png">
+         <span class="brand-logo">FoodShare</span>
+         <span class="brand-slogan">Trova la tua prossima avventura culinaria. Semplice e zero sprechi.</span>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-dark">
+         <div class="container">
+            <a class="navbar-brand navbar-brand-hidden" href="#">FoodShare</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+               <ul class="navbar-nav">
+                  <li class="nav-item active">
+                     <a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a>
+                  </li>
+                  <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-utensils"></i> Ricette</a></li>
+                  <li class="nav-item"><a class="nav-link" href="condivisione.html"><i class="fas fa-exchange-alt"></i> Condividi</a></li>
+                  <li class="nav-item"><a href="community.html" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+                  <li class="nav-item"><a href="chisiamo.html" class="nav-link"><i class="fas fa-info-circle"></i> Chi Siamo</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="container-fluid pt-4">
+         <div class="row">
+            <div class="col-lg-3 col-md-4">
+               <section class="sidebar-filters">
+                  <h4><i class="fas fa-filter"></i> Filtra la tua Dieta</h4>
+                  <div id="variation-filters">
+                     <div class="filter-item active" data-filter="Tutte"><i class="fas fa-list-ul"></i> Tutte</div>
+                     <div class="filter-item" data-filter="Vegetariana"><i class="fas fa-leaf"></i> Vegetariana</div>
+                     <div class="filter-item" data-filter="Vegan"><i class="fas fa-seedling"></i> Vegana</div>
+                     <div class="filter-item" data-filter="Senza Glutine"><i class="fas fa-bread-slice"></i> Senza Glutine</div>
+                     <div class="filter-item" data-filter="Senza Lattosio"><i class="fas fa-cheese"></i> Senza Lattosio</div>
+                  </div>
+               </section>
+            </div>
+            <div class="col-lg-9 col-md-8">
+               <section class="main-search-area">
+                  <h2 class="text-center font-weight-bold">Trova Ricette con i tuoi Ingredienti</h2>
+                  <p class="text-center text-muted">Digita uno o più ingredienti per vedere cosa puoi cucinare:</p>
+                  <div class="col-sm-10 offset-sm-1">
+                     <div class="input-group">
+                        <input type="text" id="ingredient-search-input" class="form-control" placeholder="Inserisci ingredienti...">
+                        <div class="input-group-append">
+                           <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               <section class="mb-5">
+                  <h2 class="text-center mb-4"><i class="fas fa-star" style="color: var(--accent-color);"></i> Le Ricette Popolari</h2>
+                  <div class="row" id="recipe-list"></div>
+                  <div id="no-results" class="text-center" style="display:none;">
+                     <p class="alert alert-warning">Nessuna ricetta trovata.</p>
+                  </div>
+               </section>
+            </div>
+         </div>
+         <section class="cta-section text-center">
+            <h2>Unisciti alla Community FoodShare!</h2>
+            <p class="lead">Condividi ricette e riduci lo spreco alimentare.</p>
+            <a href="#" class="btn btn-primary btn-lg">Iscriviti Ora</a>
+         </section>
+      </div>
+      <footer>FoodShare © 2024 | Privacy & Termini</footer>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script>
+         const recipes = [
+             { id: 1, title: "Hummus", ingredients: "Ceci, Olio d'oliva, Limone, Tahin, Aglio", variations: "Vegan, Senza Lattosio, Vegetariana, Senza Glutine", description: "Crema di ceci mediorientale.", image: "hummus.jpg" },
+             { id: 2, title: "Arancini di Riso", ingredients: "Riso, Ragù, Mozzarella, Panatura", variations: "Tradizionale", description: "Croccanti supplì siciliani.", image: "31279-arancini-di-riso-con-prosciutto-e-mozzarella.jpg" },
+             { id: 3, title: "Lasagne alla Bolognese", ingredients: "Pasta, Ragù, Besciamella, Parmigiano", variations: "Tradizionale", description: "Il classico della domenica.", image: "lasagne.jpg" },
+             { id: 4, title: "Risotto Funghi Porcini e Speck", ingredients: "Riso, Funghi porcini, Speck", variations: "Tradizionale", description: "Cremoso e autunnale.", image: "RISOTTO-FUNGHI-E-SPECK-.jpg" },
+             { id: 5, title: "Vellutata di Zucca", ingredients: "Zucca, Patate, Cipolla", variations: "Vegetariana, Vegan, Senza Glutine, Senza Lattosio", description: "Calda e avvolgente.", image: "vellutata.jpg" },
+             { id: 6, title: "Tiramisù", ingredients: "Savoiardi, Mascarpone, Caffè", variations: "Tradizionale", description: "Il dessert italiano più amato.", image: "tiramisu.jpg" },
+             { id: 7, title: "Pizza Zucchine e Gorgonzola", ingredients: "Impasto, Zucchine, Cipolla, Gorgonzola", variations: "Vegetariana", description: "Decisa e gustosa.", image: "pizza-zucchine.jpg" },
+             { id: 8, title: "Insalata Greca", ingredients: "Pomodori, Cetrioli, Feta, Olive", variations: "Vegetariana, Senza Glutine", description: "Fresca e leggera.", image: "Insalata-greca.jpg" },
+             { id: 9, title: "Cous Cous alle Verdure", ingredients: "Cous cous, Zucchine, Carote", variations: "Vegetariana, Vegana", description: "Colorato e leggero.", image: "cous.jpg" },
+             { id: 10, title: "Pasta Aglio, Olio e Peperoncino", ingredients: "Spaghetti, Aglio, Olio", variations: "Vegetariana, Vegana", description: "Un classico veloce.", image: "pastaaglio.jpg" },
+             { id: 11, title: "Polpette di Lenticchie", ingredients: "Lenticchie, Pangrattato", variations: "Vegana", description: "Alternative vegetali sane.", image: "lenticchie.jpg" },
+             { id: 12, title: "Pancake alla Banana", ingredients: "Banana, Uova, Farina", variations: "Vegetariana", description: "Soffici e dolci.", image: "banane.jpg" },
+             { id: 13, title: "Bruschette al Pomodoro", ingredients: "Pane, Pomodori, Basilico", variations: "Vegana", description: "Antipasto semplice e fresco.", image: "bruschette.jpg" },
+             { id: 14, title: "Ceci alla Paprika", ingredients: "Ceci, Paprika", variations: "Vegana, Senza Glutine", description: "Snack croccante e proteico.", image: "ceci.jpg" },
+             { id: 15, title: "Crepes alla Nutella", ingredients: "Farina, Latte, Uova, Nutella", variations: "Vegetariana", description: "Dolce immancabile.", image: "crepes.jpg" },
+             { id: 16, title: "Pollo al Limone", ingredients: "Pollo, Limone, Rosmarino", variations: "Senza Lattosio", description: "Secondo leggero.", image: "pollo.jpg" },
+             { id: 17, title: "Gnocchi Burro e Salvia", ingredients: "Gnocchi, Burro, Salvia", variations: "Vegetariana", description: "Semplici e buonissimi.", image: "gnocchi.jpg" },
+             { id: 18, title: "Ratatouille", ingredients: "Melanzane, Peperoni, Zucchine", variations: "Vegana, Senza Glutine", description: "Classico francese di verdure.", image: "ratatuille.jpg" },
+             { id: 19, title: "Minestrone", ingredients: "Verdure miste, Brodo", variations: "Vegana", description: "Nutriente e caldo.", image: "minestrone.jpg" },
+             { id: 20, title: "Torta di Mele", ingredients: "Mele, Farina, Uova, Burro", variations: "Vegetariana", description: "Il dolce della tradizione.", image: "tortadimele.jpg" }
+         ];
+         
+         let currentVariationFilter = 'Tutte';
+         let currentIngredientSearch = '';
+         
+         function renderRecipes(filteredRecipes) {
+             const list = $('#recipe-list');
+             list.empty();
+         
+             if (filteredRecipes.length === 0) {
+                 $("#no-results").show();
+                 return;
+             }
+             $("#no-results").hide();
+         
+             filteredRecipes.forEach(recipe => {
+                 list.append(`
+                     <div class="col-lg-4 col-md-6">
+                         <div class="recipe-item-wrapper" onclick="toggleFlip(${recipe.id})">
+                             <div class="recipe-card" id="card-${recipe.id}">
+                                 <div class="recipe-front">
+                                     <img src="${recipe.image}" class="img-fluid" alt="${recipe.title}">
+                                     <div class="p-3">
+                                         <h4>${recipe.title}</h4>
+                                         <p class="text-muted small">${recipe.description}</p>
+                                         <span class="badge badge-info" style="background-color: var(--accent-color);">
+                                             ${recipe.variations.split(',')[0]}
+                                         </span>
+                                     </div>
+                                 </div>
+         
+                                 <div class="recipe-back">
+                                     <h4>Ingredienti</h4>
+                                     <p class="ingredients-text">${recipe.ingredients}</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 `);
+             });
+         }
+         
+         function filterRecipes() {
+             let filtered = recipes;
+         
+             if (currentVariationFilter !== "Tutte") {
+                 filtered = filtered.filter(r =>
+                     r.variations.toLowerCase().includes(currentVariationFilter.toLowerCase())
+                 );
+             }
+         
+             if (currentIngredientSearch.trim() !== "") {
+                 const s = currentIngredientSearch.toLowerCase();
+                 filtered = filtered.filter(r =>
+                     r.ingredients.toLowerCase().includes(s) ||
+                     r.title.toLowerCase().includes(s)
+                 );
+             }
+         
+             renderRecipes(filtered);
+         }
+         
+         function toggleFlip(id) {
+             $(`#card-${id}`).toggleClass("flipped");
+         }
+         
+         $(document).ready(() => {
+             $("#ingredient-search-input").keyup(function () {
+                 currentIngredientSearch = $(this).val();
+                 filterRecipes();
+             });
+         
+             $("#variation-filters .filter-item").click(function () {
+                 $("#variation-filters .filter-item").removeClass("active");
+                 $(this).addClass("active");
+                 currentVariationFilter = $(this).data("filter");
+                 filterRecipes();
+             });
+         
+             renderRecipes(recipes);
+         });
+      </script>
+   </body>
+</html>
